@@ -7,9 +7,10 @@ public class PlayerMovement : MonoBehaviour
     Transform tank;
     Transform turret;
     Transform barrel;
+    new Transform camera;
     PlayerSettings settings;
     Vector2 input;
-    Vector2 turretInput;
+    Vector2 rotate;
 
     // public Transform tankBody;
     // [Tooltip("Rotates horizontally relative to tankBody")]
@@ -38,25 +39,34 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
         var playerRef = GetComponent<PlayerReference>();
         settings = playerRef.playerSettings;
         tank = playerRef.tankBody;
         turret = playerRef.turretBase;
         barrel = playerRef.barrel;
+
+        camera = Camera.main.transform;
+    }
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
-        turretInput.x += Input.GetAxis("Mouse X");
-        turretInput.y -= Input.GetAxis("Mouse Y");
+        rotate.x += Input.GetAxis("Mouse X");
+        rotate.y -= Input.GetAxis("Mouse Y");
     }
 
     void FixedUpdate()
     {
         Move();
         Aim();
+        Look();
     }
 
     void Move()
@@ -67,11 +77,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Aim()
     {
-        turretInput.x = Mathf.Clamp(turretInput.x, settings.minTurretAngle, settings.maxTurretAngle);
-        turretInput.y = Mathf.Clamp(turretInput.y, settings.minBarrelElevation, settings.maxBarrelElevation);
-        turret.rotation = Quaternion.Euler(0, turretInput.x, 0);
-        barrel.rotation = Quaternion.Euler(turretInput.y, turretInput.x, 0);
-        Camera.main.transform.position = barrel.position - turret.forward * 8;
-        Camera.main.transform.rotation = turret.rotation;
+        rotate.x = Mathf.Clamp(rotate.x, settings.minTurretAngle, settings.maxTurretAngle);
+        rotate.y = Mathf.Clamp(rotate.y, settings.minBarrelElevation, settings.maxBarrelElevation);
+        turret.localRotation = Quaternion.Euler(0, rotate.x, 0);
+        barrel.localRotation = Quaternion.Euler(rotate.y, 0, 0);
+    }
+
+    void Look()
+    {
+        var cameraRotation = turret.rotation;
+        cameraRotation.x = 0;
+        cameraRotation.z = 0;
+        camera.rotation = cameraRotation;
+        camera.position = barrel.position - camera.forward * 8;
     }
 }
