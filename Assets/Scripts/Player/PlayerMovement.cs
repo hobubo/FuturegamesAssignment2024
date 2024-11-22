@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerSettings settings;
     Vector2 input;
     Vector2 rotate;
+    float speed;
 
     // public Transform tankBody;
     // [Tooltip("Rotates horizontally relative to tankBody")]
@@ -71,8 +72,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        rb.position += input.y * tank.forward * Time.deltaTime * settings.moveSpeed;
-        tank.Rotate(0, input.y * input.x * Time.deltaTime * settings.rotationSpeed, 0);
+        speed += input.y * settings.acceleration/100;
+        speed -= speed * settings.deceleration/100;
+        speed = Mathf.Clamp(speed, - settings.moveSpeed, + settings.moveSpeed);
+        rb.position += speed * tank.forward * Time.deltaTime;
+        tank.Rotate(0, speed * input.x * Time.deltaTime * settings.rotationSpeed, 0);
     }
 
     void Aim()
