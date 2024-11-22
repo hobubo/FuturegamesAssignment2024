@@ -40,13 +40,11 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
         var playerRef = GetComponent<PlayerReference>();
         settings = playerRef.playerSettings;
         tank = playerRef.tankBody;
         turret = playerRef.turretBase;
         barrel = playerRef.barrel;
-
         camera = Camera.main.transform;
     }
 
@@ -72,8 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        speed += input.y * settings.acceleration/100;
-        speed -= speed * settings.deceleration/100;
+        speed += input.y * settings.acceleration;
+        speed -= Mathf.Sign(speed) * settings.deceleration;
         speed = Mathf.Clamp(speed, - settings.moveSpeed, + settings.moveSpeed);
         rb.position += speed * tank.forward * Time.deltaTime;
         tank.Rotate(0, speed * input.x * Time.deltaTime * settings.rotationSpeed, 0);
@@ -89,10 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Look()
     {
-        var cameraRotation = turret.rotation;
-        cameraRotation.x = 0;
-        cameraRotation.z = 0;
-        camera.rotation = cameraRotation;
-        camera.position = barrel.position - camera.forward * 8;
+        camera.rotation = Quaternion.Euler(rotate.y/3 + 15, turret.eulerAngles.y, 0);
+        camera.position = barrel.position - camera.forward * 10 + Vector3.up;
     }
 }

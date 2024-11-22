@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268685e767d6401e8083a69af09e11a1, type: 3}
   m_Name: PlayerTankSettings
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  rotationSpeed: 10
-  acceleration: 2
-  deceleration: 2
+  moveSpeed: 10
+  rotationSpeed: 5
+  acceleration: 0.3
+  deceleration: 0.15
   maxSlopeAngle: 45
   turretRotationSpeed: 10
   barrelRotationSpeed: 10
-  maxBarrelElevation: 25
+  maxBarrelElevation: 15
   minBarrelElevation: -45
   minTurretAngle: -180
   maxTurretAngle: 180

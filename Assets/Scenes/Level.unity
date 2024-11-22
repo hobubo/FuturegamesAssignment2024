@@ -399,7 +399,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 65
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -444,12 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf1c1c9c85910242867b551bd6ada48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1422757736}
---- !u!4 &1422757736 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 184872113390101353, guid: 9493bd1e312cc5440b0cb314ebc3a069, type: 3}
-  m_PrefabInstance: {fileID: 2094860868}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2094860868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,6 +515,14 @@ PrefabInstance:
     - target: {fileID: 4680694028000741416, guid: 9493bd1e312cc5440b0cb314ebc3a069, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235220745703910508, guid: 9493bd1e312cc5440b0cb314ebc3a069, type: 3}
+      propertyPath: scrollSpeed
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480058662547843002, guid: 9493bd1e312cc5440b0cb314ebc3a069, type: 3}
+      propertyPath: scrollSpeed
+      value: -20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
